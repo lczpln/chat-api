@@ -23,7 +23,7 @@ router.post("/welcome/:nickname/", (req, res) => {
 
 router.post("/message/:nickname", async (req, res) => {
     const sendBack = `message '${req.body.msg}' as been sended by '${req.params.nickname}'`
-    await messages.push({ nickname: req.params.nickname, msg: req.body.msg, date: req.body.date })
+    await messages.push({ portrait: req.body.portrait, nickname: req.params.nickname, msg: req.body.msg, date: req.body.date })
     res.status(201).send(sendBack)
     req.io.emit('newMessage', messages);
 })
