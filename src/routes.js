@@ -11,6 +11,16 @@ router.get("/", (req, res) => {
     res.status(200).send(messages)
 })
 
+router.post("/welcome/:nickname/", (req, res) => {
+    const user = req.params.nickname;
+    const date = req.body.date;
+
+    messages.push({ nickname: "MASTER123456789ROBOT", msg: `${user} acabou de entrar.`, date: date })
+
+    res.status(200).send(`${user} acabou de entrar.`)
+    req.io.emit('newMessage', messages);
+})
+
 router.post("/message/:nickname", async (req, res) => {
     const sendBack = `message '${req.body.msg}' as been sended by '${req.params.nickname}'`
     await messages.push({ nickname: req.params.nickname, msg: req.body.msg, date: req.body.date })

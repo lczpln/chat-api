@@ -8,7 +8,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 io.origins("*:*");
 
-mongoose.connect('mongodb://xxxlucasxxx:lucasxxx123@ds058739.mlab.com:58739/api-blog', {useNewUrlParser: true});
+mongoose.connect('mongodb://xxxlucasxxx:lucasxxx123@ds058739.mlab.com:58739/api-blog', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 
 app.use(cors());
@@ -17,6 +17,14 @@ app.use((req, res, next) => {
     req.io = io;
     return next();
 });
+
+io.on('connection', (socket) => {
+    socket.emit('reqWelcome');
+});
+
+/* io.on('disconnect', (socket) => {
+    socket.emit('reqGoodbye');
+}); */
 
 const routes = require('./routes');
 app.use(routes);
